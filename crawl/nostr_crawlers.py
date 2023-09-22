@@ -112,7 +112,7 @@ class CrawlerV1(AbstractCrawler):
 class CrawlerFactory(object):
 
     @staticmethod
-    def new_crawler(version: str):
+    def new_crawler(version: str) -> AbstractCrawler:
         if version == 'v1':
             return CrawlerV1()
         raise RuntimeError(f'Dont support such version : {version}')

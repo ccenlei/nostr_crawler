@@ -53,3 +53,26 @@ class NostrUser(object):
 
     def __init__(self, pub_key=str) -> None:
         self.pub_key = pub_key
+
+    def to_json(self):
+        return {
+            'pub_key': self.pub_key,
+            'name': self.name,
+            'dis_name': self.dis_name,
+            'desc': self.desc,
+            'nip05': self.nip05,
+            'nip05_veri': self.nip05_veri,
+            'lud06': self.lud06,
+            'lud16': self.lud16,
+            'first_tm': self.first_tm,
+            'last_tm': self.last_tm,
+            'followed_num': self.followed_num,
+            'following_num': self.following_num,
+            'zap_amt': self.zap_amt,
+            'zap_amt_sent': self.zap_amt_sent,
+            'twit_veri': self.twit_veri,
+            'twit_handle': self.twit_handle,
+            'twit_name': self.twit_name,
+            'twit_bio': self.twit_bio,
+            'twit_followers': self.twit_followers
+        }
