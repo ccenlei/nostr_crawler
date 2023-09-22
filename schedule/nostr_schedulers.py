@@ -25,15 +25,17 @@ class AbstractExecutor(metaclass=abc.ABCMeta):
 
 
 class ExecutorV1(AbstractExecutor):
-    distinctor = MemoryFactory().new_distinctor()
+
     url_list = []
     max_cons = 10
     quit_sig = False
 
     def __init__(self, enter_url: RequestUrl) -> None:
-        self.url_list.append(enter_url)
+        self.distinctor = MemoryFactory().new_distinctor()
         self.crawler = CrawlerFactory.new_crawler('v1')
         self.dbservice = FileDBServiceFactory().new_dbservice()
+        self.url_list.append(enter_url)
+        self.distinctor.not_exist(enter_url.url)
 
     def not_quit(self) -> bool:
         return len(self.url_list) > 0 and not self.quit_sig

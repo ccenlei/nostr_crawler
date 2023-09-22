@@ -24,7 +24,7 @@ class Processor(threading.Thread):
 
 if __name__ == '__main__':
     enter_url = RequestUrl(
-        'https://api.nostr.band/nostr?method=trending&type=people&date=2023-08-01')
+        'https://api.nostr.band/nostr?method=trending&type=people&date=2023-06-01')
     executor = ExecutorFactory.new_excutor('v1', enter_url)
     processor1 = Processor(1, "Processor-1", executor)
     processor1.start()
