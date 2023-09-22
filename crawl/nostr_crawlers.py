@@ -7,36 +7,8 @@ import re
 from typing import List
 import aiohttp
 
-from crawl.nostr_beans import NostrUser, Page, RequestUrl
+from crawl.nostr_beans import BeanFactory, Page, RequestUrl
 
-
-def to_usr(source: dict) -> NostrUser:
-    pubkey = source['pubkey']
-    nostr_usr = NostrUser(pubkey)
-    nostr_usr.name = source['name']
-    nostr_usr.desc = source['about']
-    nostr_usr.nip05 = source['nip05']
-    nostr_usr.nip05_veri = source['nip05_verified']
-    nostr_usr.dis_name = source['display_name']
-    nostr_usr.lud06 = source['lud06']
-    nostr_usr.lud16 = source['lud16']
-    nostr_usr.first_tm = source['first_tm']
-    nostr_usr.last_tm = source['last_event_tm']
-    nostr_usr.followed_num = source['followed_count']
-    nostr_usr.following_num = source['following_count']
-    nostr_usr.zap_amt = source['zap_amount']
-    nostr_usr.zap_amt_sent = source['zap_amount_sent']
-    if 'twitter' in source:
-        twitter = source['twitter']
-        nostr_usr.twit_veri = twitter['verified']
-        nostr_usr.twit_handle = twitter['handle']
-        nostr_usr.twit_name = twitter['name']
-        nostr_usr.twit_bio = twitter['bio']
-        nostr_usr.twit_followers = twitter['followers']
-    return nostr_usr
-
-
-# ========================== clrawers ==========================
 
 class AbstractCrawler(metaclass=abc.ABCMeta):
 
@@ -87,7 +59,7 @@ class CrawlerV1(AbstractCrawler):
             while len(peoples) > 0:
                 people = peoples.pop(0)
                 profile = people['profile']
-                user = to_usr(profile)
+                user = BeanFactory.to_nostr_user(profile)
                 users.append(user)
         return users
 

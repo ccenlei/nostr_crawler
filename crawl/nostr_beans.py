@@ -76,3 +76,32 @@ class NostrUser(object):
             'twit_bio': self.twit_bio,
             'twit_followers': self.twit_followers
         }
+
+
+class BeanFactory(object):
+
+    @staticmethod
+    def to_nostr_user(source: dict) -> NostrUser:
+        pubkey = source['pubkey']
+        nostr_usr = NostrUser(pubkey)
+        nostr_usr.name = source['name']
+        nostr_usr.desc = source['about']
+        nostr_usr.nip05 = source['nip05']
+        nostr_usr.nip05_veri = source['nip05_verified']
+        nostr_usr.dis_name = source['display_name']
+        nostr_usr.lud06 = source['lud06']
+        nostr_usr.lud16 = source['lud16']
+        nostr_usr.first_tm = source['first_tm']
+        nostr_usr.last_tm = source['last_event_tm']
+        nostr_usr.followed_num = source['followed_count']
+        nostr_usr.following_num = source['following_count']
+        nostr_usr.zap_amt = source['zap_amount']
+        nostr_usr.zap_amt_sent = source['zap_amount_sent']
+        if 'twitter' in source:
+            twitter = source['twitter']
+            nostr_usr.twit_veri = twitter['verified']
+            nostr_usr.twit_handle = twitter['handle']
+            nostr_usr.twit_name = twitter['name']
+            nostr_usr.twit_bio = twitter['bio']
+            nostr_usr.twit_followers = twitter['followers']
+        return nostr_usr
