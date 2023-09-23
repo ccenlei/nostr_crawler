@@ -52,16 +52,13 @@ class CrawlerV1(AbstractCrawler):
     def extract(self, page=Page):
         url = page.src_url.url
         data = page.page
-        users = []
         print(f'start to extract : {url}')
         if bool(re.match(self.list_url_pattern, url)):
             peoples = data['people']
-            while len(peoples) > 0:
-                people = peoples.pop(0)
-                profile = people['profile']
-                user = BeanFactory.to_nostr_user(profile)
-                users.append(user)
-        return users
+            users = list(map(lambda people: BeanFactory.to_nostr_user(people['profile']), peoples))
+            return users
+        else:
+            return None
 
     async def crawl(self, nostr_url=RequestUrl) -> Page:
         url = nostr_url.url

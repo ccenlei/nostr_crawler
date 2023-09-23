@@ -54,7 +54,7 @@ class ExecutorV1(AbstractExecutor):
             pages = task_future.result()
             for page in pages:
                 users = self.crawler.extract(page)
-                if len(users) > 0:
+                if users:
                     self.dbservice.save_datas(users, page)
                 req_urls = self.crawler.urls_find(page)
                 dist_urls = [
